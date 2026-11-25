@@ -731,7 +731,7 @@ footer{padding:40px 0;border-top:1px solid var(--line);}
     <div class="faq-a">
       <p><b>Что собираем.</b> Имя, телефон или Telegram, регион и текст сообщения — только то, что вы сами вводите в форму заявки.</p>
       <p><b>Зачем.</b> Единственная цель — связаться с вами по вашей же заявке. Никакой рассылки, никакой передачи третьим лицам, никакой рекламы.</p>
-      <p><b>Кто видит.</b> Только Скляр Фёдор Васильевич (ИП) лично — форма отправляет данные напрямую на личную почту, без промежуточного сервера и без сторонних сервисов аналитики на этой странице.</p>
+      <p><b>Кто видит.</b> Только Скляр Фёдор Васильевич (ИП) лично. Заявки хранятся в защищенном сервисе Web3Forms и приходят на личную почту. Сторонних сервисов аналитики на странице нет.</p>
       <p><b>Хранение и удаление.</b> Данные хранятся до тех пор, пока не понадобятся для связи с вами, либо до вашего запроса на удаление — напишите на fedor.sklyar@gmail.com или в Telegram @fedorsklyar, и данные удалят.</p>
       <p style="font-size:11.5px;color:var(--ink-faint);margin-top:14px;">Это добросовестный черновик, а не юридически выверенный документ — проект на стадии проверки идеи. Перед реальным запуском платформы политика будет оформлена юристом и платформа — зарегистрирована оператором персональных данных, как того требует 152-ФЗ.</p>
     </div>
@@ -752,7 +752,6 @@ footer{padding:40px 0;border-top:1px solid var(--line);}
       <p>Заполните форму или напишите напрямую. Мы отвечаем лично, это не автоворонка.</p>
     </div>
 
-    <!-- НАЧАЛО ФОРМЫ -->
     <form id="leadForm">
       <div class="role-toggle" id="roleToggle">
         <button type="button" class="role-btn active" data-role="Карьер">Я карьер</button>
@@ -764,19 +763,19 @@ footer{padding:40px 0;border-top:1px solid var(--line);}
       <div class="form-grid">
         <div>
           <label for="fName">Имя</label>
-          <input id="fName" type="text" placeholder="Как к вам обращаться" required>
+          <input id="fName" name="Имя" type="text" placeholder="Как к вам обращаться" required>
         </div>
         <div>
           <label for="fContact">Телефон или Telegram</label>
-          <input id="fContact" type="text" placeholder="+7 ... или @username" required>
+          <input id="fContact" name="Контакт" type="text" placeholder="+7 ... или @username" required>
         </div>
         <div class="full">
           <label for="fRegion">Регион</label>
-          <input id="fRegion" type="text" placeholder="Например, Московская область">
+          <input id="fRegion" name="Регион" type="text" placeholder="Например, Московская область">
         </div>
         <div class="full">
           <label for="fMsg">Коротко о вашей ситуации (необязательно)</label>
-          <textarea id="fMsg" placeholder="Например: часто ли случаются споры по фракции или весу, как решаете сейчас"></textarea>
+          <textarea id="fMsg" name="Сообщение" placeholder="Например: часто ли случаются споры по фракции или весу, как решаете сейчас"></textarea>
         </div>
       </div>
 
@@ -789,21 +788,8 @@ footer{padding:40px 0;border-top:1px solid var(--line);}
         <button type="submit" class="btn btn-primary" id="leadSubmit">Отправить заявку →</button>
       </div>
     </form>
-    <!-- КОНЕЦ ФОРМЫ -->
 
-    <p class="form-note">Поля со звездочкой (на самом деле мы сделали их обязательными через HTML) важны для связи. Удобнее мессенджер? Пишите сразу в Telegram: <b style="color:#E8A87C;">@fedorsklyar</b>.</p>
-  </div>
-</div>
-
-    <label style="display:flex;align-items:flex-start;gap:10px;margin-top:18px;max-width:640px;cursor:pointer;font-family:var(--body);text-transform:none;letter-spacing:normal;">
-      <input type="checkbox" id="fConsent" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--rust);">
-      <span style="font-size:12.5px;color:#B8C0C8;line-height:1.5;">Согласен(на) на обработку персональных данных согласно <a href="#privacy" style="color:#E8A87C;">политике обработки</a></span>
-    </label>
-
-    <div class="form-submit">
-      <button type="submit" class="btn btn-primary" id="leadSubmit">Отправить заявку →</button>
-    </div>
-    <p class="form-note">Заявка откроет ваш почтовый клиент с предзаполненным письмом на <b style="color:#E8A87C;">fedor.sklyar@gmail.com</b>. Формы без бэкенда пока нет осознанно — на этой стадии важнее личный разговор, чем автоматизация. Быстрее всего — сразу в Telegram: <b style="color:#E8A87C;">@fedorsklyar</b>.</p>
+    <p class="form-note">Удобнее мессенджер? Пишите сразу в Telegram: <b style="color:#E8A87C;">@fedorsklyar</b> или на <b style="color:#E8A87C;">fedor.sklyar@gmail.com</b>.</p>
   </div>
 </div>
 
@@ -845,7 +831,6 @@ if (roleToggle) {
 }
 
 // --- НАСТРОЙКА ОТПРАВКИ ЧЕРЕЗ WEB3FORMS ---
-// Вставьте сюда ваш Access Key, который пришел на почту (вместо кавычек)
 const accessKey = "bc1cc5b8-e1e7-4ce0-9014-0b37307a143d"; 
 // ------------------------------------------
 
@@ -865,7 +850,7 @@ if (leadForm) {
 
     const formData = new FormData(leadForm);
     formData.append("access_key", accessKey);
-    formData.append("role", selectedRole); // Добавляем выбранную роль
+    formData.append("Роль", selectedRole);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -887,6 +872,7 @@ if (leadForm) {
       if (btn) { btn.disabled = false; btn.textContent = 'Отправить заявку →'; }
     }
   });
+}
 </script>
 
 </body>
