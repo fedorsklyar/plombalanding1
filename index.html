@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПЛОМБА — защищённая сделка для нерудных материалов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1F2933; --ink-soft:#52606D; --ink-faint:#8A97A0;
+  --paper:#F1F2F4; --paper-warm:#EDE7DE; --card:#FFFFFF; --line:#DFE3E6;
+  --rust:#B5622E; --rust-dark:#8F4B22; --rust-soft:#F3E4D5;
+  --blue:#2B6CB0; --blue-soft:#DCEBFA;
+  --green:#2F855A; --green-soft:#E1F3E8;
+  --red:#C0392B; --red-soft:#FBE4E1;
+  --amber:#B7791F; --amber-soft:#FBEFD9;
+  --disp:'Space Grotesk','Inter',sans-serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper-warm);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;}
+a{color:inherit;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+::selection{background:var(--rust);color:#fff;}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:50;background:rgba(237,231,222,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-mark{width:34px;height:34px;border-radius:8px;background:var(--rust);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:15px;color:#fff;transform:rotate(-4deg);box-shadow:0 2px 0 rgba(0,0,0,.2) inset;flex-shrink:0;}
+.brand b{font-family:var(--disp);font-size:18px;letter-spacing:.3px;color:var(--ink);}
+.navlinks{display:flex;gap:28px;font-size:14px;color:var(--ink-soft);}
+.navlinks a{text-decoration:none;}
+.navlinks a:hover{color:var(--rust);}
+.nav-cta{background:var(--ink);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-family:var(--body);font-weight:600;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-block;}
+.nav-cta:hover{background:var(--rust);}
+@media(max-width:720px){.navlinks{display:none;}}
+
+/* ---------- hero ---------- */
+.hero{padding:88px 0 64px;position:relative;overflow:hidden;}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;}}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--rust);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:18px;}
+h1{font-family:var(--disp);font-size:clamp(34px,5vw,54px);line-height:1.06;font-weight:700;margin:0 0 22px;color:var(--ink);letter-spacing:-.5px;}
+h1 em{font-style:normal;color:var(--rust);}
+.hero p.lede{font-size:17px;color:var(--ink-soft);max-width:520px;margin:0 0 32px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{font-family:var(--body);font-weight:600;font-size:14.5px;padding:14px 24px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .15s ease;}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--rust);color:#fff;}
+.btn-primary:hover{background:var(--rust-dark);}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+.btn-ghost:hover{border-color:var(--ink);}
+
+/* seal signature */
+.seal-wrap{display:flex;justify-content:center;align-items:center;}
+.seal{width:280px;height:280px;position:relative;}
+.seal svg{width:100%;height:100%;}
+.seal-caption{text-align:center;margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink-faint);}
+@media(max-width:860px){.seal{width:200px;height:200px;margin:0 auto;}}
+
+/* ---------- pain ---------- */
+.section{padding:72px 0;}
+.section-head{max-width:640px;margin:0 0 44px;}
+.section-head .eyebrow{margin-bottom:12px;}
+h2{font-family:var(--disp);font-size:clamp(26px,3.4vw,36px);font-weight:700;margin:0 0 14px;letter-spacing:-.3px;}
+.section-head p{color:var(--ink-soft);font-size:16px;margin:0;}
+
+.pain-quote{background:var(--ink);color:#fff;border-radius:16px;padding:48px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;}
+@media(max-width:720px){.pain-quote{grid-template-columns:1fr;padding:32px;}}
+.pain-quote .mark{font-family:var(--disp);font-size:64px;color:var(--rust);line-height:1;}
+.pain-quote p{font-family:var(--disp);font-size:22px;line-height:1.35;margin:0;font-weight:600;}
+.pain-quote span{display:block;font-family:var(--body);font-size:14px;font-weight:400;color:#B8C0C8;margin-top:14px;}
+
+/* ---------- how it works ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:step;}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.steps{grid-template-columns:1fr;}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 22px;}
+.step-num{font-family:var(--mono);font-size:13px;color:var(--rust);font-weight:600;margin-bottom:14px;}
+.step h3{font-family:var(--disp);font-size:17px;margin:0 0 8px;}
+.step p{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+
+/* ---------- trust ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:960px){.trust-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.trust-grid{grid-template-columns:1fr;}}
+.trust-card{background:var(--card);border-radius:14px;padding:28px;border:1px solid var(--line);}
+.trust-card .icon{width:40px;height:40px;border-radius:10px;background:var(--rust-soft);color:var(--rust-dark);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:15px;margin-bottom:16px;}
+.trust-card h3{font-family:var(--disp);font-size:16px;margin:0 0 8px;}
+.trust-card p{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.55;}
+.trust-card .law{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--blue);background:var(--blue-soft);padding:3px 8px;border-radius:5px;}
+
+/* ---------- market chart ---------- */
+.market-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;}
+@media(max-width:860px){.market-grid{grid-template-columns:1fr;}}
+.stat-big{margin-bottom:28px;}
+.stat-big .num{font-family:var(--disp);font-size:44px;font-weight:700;color:var(--rust);line-height:1;}
+.stat-big .lbl{font-size:13.5px;color:var(--ink-soft);margin-top:6px;max-width:280px;}
+.chart-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;}
+.chart-card .chart-title{font-family:var(--mono);font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;}
+.bar-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.bar-row .bar-label{width:52px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);flex-shrink:0;}
+.bar-track{flex:1;background:var(--paper);border-radius:6px;height:34px;position:relative;overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-family:var(--mono);font-size:12.5px;font-weight:600;}
+.chart-source{font-size:11px;color:var(--ink-faint);margin-top:6px;}
+.chart-insight{display:flex;gap:12px;align-items:flex-start;background:var(--rust-soft);border-radius:10px;padding:14px 16px;margin-top:16px;}
+.chart-insight .bulb{font-family:var(--mono);font-weight:700;color:var(--rust-dark);flex-shrink:0;font-size:13px;background:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.chart-insight p{margin:0;font-size:12.5px;color:var(--rust-dark);line-height:1.55;}
+
+/* ---------- role comparison (interactive) ---------- */
+.role-tabs{display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+.role-tab{background:var(--card);border:1.5px solid var(--line);color:var(--ink-soft);padding:13px 22px;border-radius:10px;font-family:var(--body);font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s ease;}
+.role-tab .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);}
+.role-tab.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+.role-tab.active .dot{background:var(--rust);}
+.role-tab:hover:not(.active){border-color:var(--ink-soft);}
+.role-panel{display:none;}
+.role-panel.active{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp .35s ease;}
+.role-panel.active > div{flex:1 1 320px;min-width:280px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.role-headline{font-family:var(--disp);font-size:22px;font-weight:700;margin:0 0 12px;}
+.role-sub{font-size:14px;color:var(--ink-soft);margin:0 0 24px;line-height:1.6;}
+.role-benefits{margin:0;padding:0;list-style:none;}
+.role-benefits li{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink);}
+.role-benefits li:first-child{border-top:none;}
+.role-benefits li .check{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.metric-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;}
+.metric-card .chart-title{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
+.metric{margin-bottom:20px;}
+.metric:last-child{margin-bottom:0;}
+.metric .metric-label{font-size:12.5px;color:var(--ink-soft);margin-bottom:8px;font-weight:600;}
+.metric .mbar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.metric .mbar-tag{width:86px;flex-shrink:0;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;}
+.metric .mbar-track{flex:1;background:var(--paper);border-radius:5px;height:26px;overflow:hidden;}
+.metric .mbar-fill{height:100%;display:flex;align-items:center;padding-left:10px;font-size:11.5px;font-weight:600;color:#fff;border-radius:5px;white-space:nowrap;}
+.metric .mbar-fill.before{background:var(--ink-faint);}
+.metric .mbar-fill.after{background:var(--rust);}
+
+/* ---------- full toolkit ---------- */
+.tool-group{margin-bottom:36px;}
+.tool-group:last-child{margin-bottom:0;}
+.tool-group-title{font-family:var(--mono);font-size:12px;color:var(--rust);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.tool-group-title::after{content:'';flex:1;height:1px;background:var(--line);}
+.tool-grid{display:flex;flex-wrap:wrap;gap:16px;}
+.tool-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;flex:1 1 260px;min-width:240px;}
+.tool-card .tool-icon{width:34px;height:34px;border-radius:9px;background:var(--paper-warm);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--rust-dark);margin-bottom:12px;}
+.tool-card h4{font-family:var(--disp);font-size:14.5px;margin:0 0 6px;}
+.tool-card p{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+.tool-card .tool-num{font-family:var(--mono);font-size:11px;color:var(--green);font-weight:700;background:var(--green-soft);border-radius:5px;padding:2px 7px;display:inline-block;margin-top:8px;}
+
+/* ---------- competitor comparison ---------- */
+.cmp-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+.cmp-table th, .cmp-table td{padding:14px 16px;text-align:left;font-size:13px;border-bottom:1px solid var(--line);}
+.cmp-table th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-faint);font-weight:600;background:var(--paper-warm);}
+.cmp-table th:first-child, .cmp-table td:first-child{font-weight:600;color:var(--ink);}
+.cmp-table td.yes{color:var(--green);font-weight:700;text-align:center;}
+.cmp-table td.no{color:var(--ink-faint);text-align:center;}
+.cmp-table td.partial{color:var(--amber);text-align:center;font-weight:700;}
+.cmp-table tr:last-child td{border-bottom:none;}
+.cmp-table td.us, .cmp-table th.us{background:var(--rust-soft);}
+.cmp-wrap-scroll{overflow-x:auto;}
+.moat-box{background:var(--ink);color:#fff;border-radius:16px;padding:32px;margin-top:28px;}
+.moat-box h3{font-family:var(--disp);font-size:18px;margin:0 0 16px;color:#fff;}
+.moat-grid{display:flex;flex-wrap:wrap;gap:20px;}
+.moat-item{flex:1 1 260px;min-width:220px;}
+.moat-item .moat-num{font-family:var(--mono);color:var(--rust);font-size:12px;font-weight:700;margin-bottom:6px;}
+.moat-item p{font-size:12.5px;color:#C3CAEE;margin:0;line-height:1.6;}
+
+/* ---------- faq ---------- */
+.faq-list{max-width:760px;}
+.faq-item{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.faq-item summary{padding:20px 52px 20px 24px;font-family:var(--disp);font-size:15.5px;font-weight:700;cursor:pointer;list-style:none;position:relative;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-family:var(--mono);font-size:20px;font-weight:400;color:var(--rust);position:absolute;right:24px;top:18px;transition:transform .2s ease;}
+.faq-item[open] summary::after{transform:rotate(45deg);}
+.faq-item[open] summary{border-bottom:1px solid var(--line);}
+.faq-item .faq-a{padding:4px 24px 20px;font-size:14px;color:var(--ink-soft);line-height:1.65;}
+.faq-item .faq-a b{color:var(--ink);}
+
+/* ---------- roadmap ---------- */
+.roadmap{display:flex;gap:0;position:relative;}
+@media(max-width:720px){.roadmap{flex-direction:column;gap:20px;}}
+.rm-step{flex:1;position:relative;padding:0 20px;}
+.rm-step:first-child{padding-left:0;}
+.rm-step:last-child{padding-right:0;}
+.rm-dot{width:14px;height:14px;border-radius:50%;background:var(--rust);border:3px solid var(--card);box-shadow:0 0 0 1px var(--rust);margin-bottom:16px;position:relative;z-index:2;}
+.rm-step.future .rm-dot{background:var(--card);box-shadow:0 0 0 1px var(--ink-faint);}
+.rm-line{position:absolute;top:6px;left:0;right:0;height:2px;background:var(--line);z-index:1;}
+@media(max-width:720px){.rm-line{display:none;}}
+.rm-step h4{font-family:var(--disp);font-size:15px;margin:0 0 6px;}
+.rm-step p{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+.rm-tag{font-family:var(--mono);font-size:10.5px;color:var(--rust);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block;}
+.honest{background:var(--amber-soft);border:1px solid #E8D5A8;border-radius:12px;padding:22px 26px;font-size:13.5px;color:#6B4E10;line-height:1.6;}
+.honest b{color:var(--rust-dark);}
+
+/* ---------- form ---------- */
+.form-section{background:var(--ink);color:#fff;border-radius:20px;padding:56px;margin:0 24px;}
+@media(max-width:720px){.form-section{padding:32px 24px;margin:0 12px;}}
+.form-section .section-head h2{color:#fff;}
+.form-section .section-head p{color:#B8C0C8;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:640px;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+.form-grid .full{grid-column:1/-1;}
+label{display:block;font-size:12.5px;color:#B8C0C8;margin-bottom:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px;}
+input,select,textarea{width:100%;background:#2A333C;border:1px solid #3C4650;color:#fff;border-radius:8px;padding:12px 14px;font-family:var(--body);font-size:14px;}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--rust);outline-offset:1px;}
+textarea{resize:vertical;min-height:80px;}
+.role-toggle{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.role-btn{flex:1;min-width:140px;background:#2A333C;border:1.5px solid #3C4650;color:#B8C0C8;padding:12px 16px;border-radius:9px;font-family:var(--body);font-weight:600;font-size:13.5px;cursor:pointer;text-align:center;}
+.role-btn.active{background:var(--rust);border-color:var(--rust);color:#fff;}
+.form-submit{margin-top:22px;}
+.form-note{font-size:12px;color:#8A97A0;margin-top:14px;max-width:640px;line-height:1.6;}
+
+/* ---------- footer ---------- */
+footer{padding:40px 0;border-top:1px solid var(--line);}
+.foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-faint);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand">
+      <div class="brand-mark">П</div>
+      <b>ПЛОМБА</b>
+    </a>
+    <nav class="navlinks">
+      <a href="#problem">Проблема</a>
+      <a href="#how">Как работает</a>
+      <a href="#roles">Для кого</a>
+      <a href="#toolkit">Возможности</a>
+      <a href="#compare">Рынок</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#trust">Гарантии</a>
+      <a href="#contact">Контакты</a>
+      <a href="https://t.me/fedorsklyar" target="_blank" rel="noopener">Telegram ↗</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Оставить заявку</a>
+  </div>
+</header>
+
+<div id="top" class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Нерудные строительные материалы · защищённая сделка</div>
+      <h1>Платите не за обещание —<br>а за подтверждённую <em>поставку</em></h1>
+      <p class="lede">Деньги заказчика остаются под защитой платформы, пока он не подтвердит получение — или пока независимый эксперт не решит спор по представленным доказательствам. Это не автоматическая проверка «на глаз» — это чёткий процесс с понятными правилами. Сейчас мы проверяем эту идею на реальных карьерах, перевозчиках и заказчиках — и хотим услышать именно вас.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Оставить заявку →</a>
+        <a href="#how" class="btn btn-ghost">Как это работает</a>
+      </div>
+    </div>
+    <div class="seal-wrap">
+      <div class="seal">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="94" fill="none" stroke="var(--rust)" stroke-width="2"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="1 5"/>
+          <circle cx="100" cy="100" r="50" fill="var(--rust)"/>
+          <path d="M 78,101 L 93,116 L 124,84" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="seal-caption">ПЛОМБА · ЗАЩИЩЁННАЯ СДЕЛКА</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section wrap">
+  <div class="market-grid">
+    <div>
+      <div class="eyebrow">Почему сейчас, а не когда рынок вырастет</div>
+      <h2>Падающий рынок — это не плохая новость для нас</h2>
+      <div class="stat-big">
+        <div class="num">509 млн м³</div>
+        <div class="lbl">продажи нерудных материалов в РФ, 2025 год — рынок всё ещё огромный</div>
+      </div>
+      <p style="font-size:14px;color:var(--ink-soft);max-width:400px;">При падении объёмов карьеры конкурируют ценой острее — а значит чаще срезают углы на качестве и весе. Именно в такой момент цена спора и ценность верификации растут быстрее всего.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Продажи нерудных материалов, млн м³</div>
+      <div class="bar-row">
+        <div class="bar-label">2024</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--ink-faint);">606</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">2025</div>
+        <div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--rust);">509</div></div>
+      </div>
+      <div class="chart-source">Источник: BusinesStat, оценка продаж по РФ · −16% год к году</div>
+      <div class="chart-insight">
+        <span class="bulb">!</span>
+        <p><b>−16% рынка ≠ −16% нашей возможности.</b> Ценовая война между карьерами усиливает именно ту боль, которую решает верификация отгрузки — рынок сжимается, а не спрос на доверие.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="problem" class="section wrap">
+  <div class="pain-quote">
+    <div class="mark">«</div>
+    <div>
+      <p>Заказали фракцию 40 — привезли фракцию 20.<span>Сегодня это решается только через суд: дорого, долго, портит отношения с контрагентом на годы вперёд.</span></p>
+    </div>
+  </div>
+</div>
+
+<div id="how" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Как это работает</div>
+    <h2>Четыре шага от заказа до выплаты</h2>
+    <p>Деньги заказчика удерживаются платформой до подтверждённой корректной отгрузки — не у продавца заранее.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Заказ</h3><p>Заказчик оплачивает, средства блокируются платформой — карьер их пока не получает.</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Отгрузка</h3><p>Карьер грузит материал, фиксирует фото с подлинной геометкой и временем съёмки — доказательство на случай спора.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Приёмка или спор</h3><p>Заказчик подтверждает получение — либо указывает на расхождение по фракции или весу и открывает спор.</p></div>
+    <div class="step"><div class="step-num">04</div><h3>Выплата</h3><p>Подтверждено — деньги карьеру сразу. Спор — решает независимый эксперт по факту и представленным доказательствам.</p></div>
+  </div>
+</div>
+
+<div id="trust" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Гарантии</div>
+    <h2>Не голословно — по конкретным правовым основаниям</h2>
+    <p>Качество и количество — разные проблемы с разными решениями, и мы их не путаем.</p>
+  </div>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="icon">₽</div>
+      <h3>Деньги под защитой</h3>
+      <p>Платформа удерживает оплату заказчика до подтверждения — карьер получает её не раньше, чем сделка закрыта без спора или спор решён.</p>
+    </div>
+    <div class="trust-card">
+      <div class="icon">EXIF</div>
+      <h3>Настоящая проверка фото</h3>
+      <p>Разбор данных съёмки определяет, когда и где сделан снимок — подмену задним числом видно сразу.</p>
+    </div>
+    <div class="trust-card">
+      <div class="icon">§</div>
+      <h3>Разные основания спора</h3>
+      <p>Не та фракция — это замена или снижение цены. Недовес — это точный пересчёт по факту нехватки, не «на глаз».</p>
+      <span class="law">ст. 475 и 465-466 ГК РФ</span>
+    </div>
+    <div class="trust-card">
+      <div class="icon">↺</div>
+      <h3>Апелляция для всех сторон</h3>
+      <p>Карьер, перевозчик и заказчик — каждый вправе оспорить решение. Рассматривает другой, независимый эксперт.</p>
+    </div>
+  </div>
+</div>
+
+<div id="roles" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Для кого</div>
+    <h2>Три стороны одной сделки — у каждой своя выгода</h2>
+    <p>Переключите роль — цифры и выгоды разные для каждого участника.</p>
+  </div>
+
+  <div class="role-tabs" id="roleTabs">
+    <button type="button" class="role-tab active" data-panel="panel-quarry"><span class="dot"></span>Карьер</button>
+    <button type="button" class="role-tab" data-panel="panel-carrier"><span class="dot"></span>Перевозчик</button>
+    <button type="button" class="role-tab" data-panel="panel-buyer"><span class="dot"></span>Заказчик</button>
+  </div>
+
+  <div class="role-panel active" id="panel-quarry">
+    <div>
+      <h3 class="role-headline">Меньше споров на слово против слова</h3>
+      <p class="role-sub">Сегодня карьер часто виноват по умолчанию — заказчик недоволен, а доказать свою правоту постфактум нечем.</p>
+      <ul class="role-benefits">
+        <li><span class="check">✓</span>Оплата сразу после подтверждённой отгрузки, не после долгого согласования</li>
+        <li><span class="check">✓</span>BNPL/факторинг: заказчик получает отсрочку 15-30 дней, а вы всё равно получаете деньги сразу через партнёра платформы</li>
+        <li><span class="check">✓</span>Доказательства (фото с EXIF, весовая) собираются автоматически в момент отгрузки</li>
+        <li><span class="check">✓</span>Репутация и история сделок видны новым заказчикам — не нужно объяснять с нуля</li>
+      </ul>
+    </div>
+    <div class="metric-card">
+      <div class="chart-title">Без ПЛОМБЫ → С ПЛОМБОЙ</div>
+      <div class="metric">
+        <div class="metric-label">Скорость получения оплаты</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:75%;">Долгое согласование</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:35%;">Сразу</div></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Риск спора без доказательств</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:85%;">Слово против слова</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:25%;">Зафиксировано сразу</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-panel" id="panel-carrier">
+    <div>
+      <h3 class="role-headline">Выбираете рейс, а не соглашаетесь на первую цену</h3>
+      <p class="role-sub">Сегодня перевозчик берёт фиксированную ставку от диспетчера и часто отвечает за чужие ошибки в качестве груза.</p>
+      <ul class="role-benefits">
+        <li><span class="check">✓</span>Тендер среди перевозчиков — конкурентное предложение цены, а не навязанный тариф</li>
+        <li><span class="check">✓</span>Спор по качеству/весу груза юридически отделён от вашей зоны ответственности</li>
+        <li><span class="check">✓</span>Компенсацию простоя техники при просрочке экспертизы платит платформа, а не заказчик за ваш счёт</li>
+        <li><span class="check">✓</span>Условия рейса и оплата зафиксированы в заказе заранее, без сюрпризов постфактум</li>
+      </ul>
+    </div>
+    <div class="metric-card">
+      <div class="chart-title">Без ПЛОМБЫ → С ПЛОМБОЙ</div>
+      <div class="metric">
+        <div class="metric-label">Формирование цены рейса</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:70%;">Фиксирует диспетчер</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:55%;">Конкурентный тендер</div></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Риск отвечать за чужой спор</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:65%;">Размыто, неочевидно</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:20%;">Чётко разграничено</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-panel" id="panel-buyer">
+    <div>
+      <h3 class="role-headline">Платите за то, что реально привезли</h3>
+      <p class="role-sub">Сегодня деньги уходят карьеру до того, как можно проверить, что привезли именно то, что заказывали.</p>
+      <ul class="role-benefits">
+        <li><span class="check">✓</span>Деньги под защитой платформы до подтверждения корректной отгрузки</li>
+        <li><span class="check">✓</span>Отсрочка платежа 15-30 дней (BNPL) и страхование груза от 0,2% стоимости — по желанию, не обязательно</li>
+        <li><span class="check">✓</span>Спор решает независимый эксперт, а не мнение продавца — с апелляцией</li>
+        <li><span class="check">✓</span>Прозрачная история сделок с конкретным поставщиком перед заказом</li>
+      </ul>
+    </div>
+    <div class="metric-card">
+      <div class="chart-title">Без ПЛОМБЫ → С ПЛОМБОЙ</div>
+      <div class="metric">
+        <div class="metric-label">Гарантия оплаты за факт поставки</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:80%;">Платите заранее без гарантий</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:40%;">Под защитой до проверки</div></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Путь разрешения спора</div>
+        <div class="mbar-row"><span class="mbar-tag">Сейчас</span><div class="mbar-track"><div class="mbar-fill before" style="width:90%;">Только суд, долго</div></div></div>
+        <div class="mbar-row"><span class="mbar-tag">С ПЛОМБОЙ</span><div class="mbar-track"><div class="mbar-fill after" style="width:30%;">Независимый эксперт</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:11.5px;color:var(--ink-faint);margin-top:24px;">Графики иллюстративные — показывают направление изменения, не измеренные проценты: у нас пока нет ни одной коммерческой сделки для точной статистики.</p>
+</div>
+
+<div id="toolkit" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Полный набор инструментов</div>
+    <h2>Не только верификация — вся сделка целиком</h2>
+    <p>Всё ниже — не список планов, а то, что уже собрано и работает в прототипе. Часть интеграций (страхование, телематика, 1С) — честно помечены как демо-заглушки без реального договора с партнёром, остальное — рабочая бизнес-логика.</p>
+  </div>
+
+  <div class="tool-group">
+    <div class="tool-group-title">Финансы и расчёты</div>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon">₽</div>
+        <h4>BNPL для заказчика</h4>
+        <p>Отсрочка платежа 15 или 30 дней, комиссия 1,5-2,5% — по ориентиру типичного факторинга, не выдуманная цифра.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⇄</div>
+        <h4>Факторинг для карьера</h4>
+        <p>Даже если заказчик платит с отсрочкой, карьер получает деньги сразу после чистой отгрузки — платит партнёр-финансист.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⛨</div>
+        <h4>Страхование груза</h4>
+        <p>От 0,2% стоимости материала, мин. 500 ₽ — котировка от пула страховщиков (Ингосстрах, Ренессанс, СК «ПАРИ»).</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">%</div>
+        <h4>Скользящая комиссия</h4>
+        <p>Ставка зависит от суммы сделки, со скидкой за повторные заказы у одного и того же карьера.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-group">
+    <div class="tool-group-title">Логистика</div>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon">⇅</div>
+        <h4>Тендер среди перевозчиков</h4>
+        <p>Несколько перевозчиков предлагают цену на рейс, заказчик выбирает — вместо фиксированного тарифа от диспетчера.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⚑</div>
+        <h4>Мультистоп-маршруты</h4>
+        <p>До 3 заказов от одного карьера объединяются в один рейс — логистика дешевле для всех участников.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⏱</div>
+        <h4>Компенсация простоя</h4>
+        <p>Если экспертиза спора превышает SLA, простой техники компенсирует платформа — это её недоработка, не участников сделки.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">◉</div>
+        <h4>GPS-трек рейса</h4>
+        <p>Телематика фиксирует маршрут вместо одной фотографии в конце — видно движение груза, а не только точку прибытия.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-group">
+    <div class="tool-group-title">Доверие и верификация</div>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon">✓</div>
+        <h4>Депозит доверия</h4>
+        <p>Формируется реактивно (после проигранных споров) и проактивно — по скорингу риска карьера ещё до первого спора.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">§</div>
+        <h4>Два разных основания спора</h4>
+        <p>Не та фракция (ст. 475 ГК РФ) и недовес (ст. 465-466 ГК РФ) — разные правовые механизмы, не смешиваются в одну жалобу.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">↺</div>
+        <h4>Апелляция для всех сторон</h4>
+        <p>Карьер, перевозчик и заказчик вправе оспорить решение — рассматривает другой, независимый эксперт.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">▤</div>
+        <h4>Паспорт партии</h4>
+        <p>QR-код с хэшем сделки, экспорт для тендерной документации — готовая опора под 44-ФЗ/223-ФЗ.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-group">
+    <div class="tool-group-title">Рост и масштаб</div>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon">→</div>
+        <h4>Реферальная программа</h4>
+        <p>Карьер привёл карьера — после первой реальной сделки приглашённого рефереру начисляется скидка 10% на комиссию.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">◆</div>
+        <h4>Дилерские контракты</h4>
+        <p>Фиксация цены на 3/6/12 месяцев под гарантированный объём, скидка 3/5/8% — премиум-опция для крупных заказчиков.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">▲</div>
+        <h4>Индекс цен ПЛОМБА</h4>
+        <p>Агрегированная аналитика по реальным сделкам на платформе — ориентир по рынку, не с потолка.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⇌</div>
+        <h4>Синхронизация с 1С</h4>
+        <p>Цены и остатки карьера обновляются автоматически, без ручного дублирования в двух системах.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="compare" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Рынок России и СНГ</div>
+    <h2>Что уже есть на рынке — и чего нет ни у кого</h2>
+    <p>Проверили открытые площадки по нерудным материалам и стройиндустрии в России, Казахстане, Узбекистане и Беларуси, прежде чем писать эту таблицу.</p>
+  </div>
+
+  <div class="cmp-wrap-scroll">
+    <table class="cmp-table">
+      <tr>
+        <th>Возможность</th>
+        <th>B2B-каталоги<br><span style="font-weight:400;text-transform:none;">(Sellty, Agora и аналоги)</span></th>
+        <th>Гос./отраслевые площадки<br><span style="font-weight:400;text-transform:none;">(маркетплейс stroimaterial.kz, аналоги в СНГ)</span></th>
+        <th>Логистические тендеры<br><span style="font-weight:400;text-transform:none;">(ATI.SU и аналоги)</span></th>
+        <th class="us">ПЛОМБА</th>
+      </tr>
+      <tr>
+        <td>Каталог и заявки</td>
+        <td class="yes">✓</td>
+        <td class="yes">✓</td>
+        <td class="no">—</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>Тендер среди перевозчиков</td>
+        <td class="no">—</td>
+        <td class="partial">частично</td>
+        <td class="yes">✓</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>Деньги под защитой до подтверждения</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>Независимое разрешение спора по существу</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>Разделение оснований: качество vs недовес</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="no">—</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>Встроенное финансирование (BNPL/факторинг)</td>
+        <td class="no">—</td>
+        <td class="partial">у отдельных игроков</td>
+        <td class="no">—</td>
+        <td class="yes us">✓</td>
+      </tr>
+      <tr>
+        <td>История доверия конкретного поставщика</td>
+        <td class="partial">рейтинг</td>
+        <td class="partial">рейтинг</td>
+        <td class="partial">рейтинг</td>
+        <td class="yes us">✓ + депозит доверия</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="moat-box">
+    <h3>Почему это трудно скопировать за один спринт</h3>
+    <div class="moat-grid">
+      <div class="moat-item">
+        <div class="moat-num">01 · Правовая база</div>
+        <p>Разделение спора на два разных основания ГК РФ — не техническая фича, а результат юридической проработки, которую нельзя скопировать по скриншоту интерфейса.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-num">02 · Партнёрства</div>
+        <p>Удержание денег до подтверждения требует реальной банковской инфраструктуры — это месяцы переговоров с банком, не строчка кода.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-num">03 · Сеть экспертов</div>
+        <p>Независимая экспертиза нужна живыми людьми с профильной квалификацией и без конфликта интересов — такую сеть нельзя запустить кнопкой.</p>
+      </div>
+      <div class="moat-item">
+        <div class="moat-num">04 · Накопленное доверие</div>
+        <p>Депозит доверия и репутация конкретного карьера накапливаются сделка за сделкой — у копии всегда ноль истории на старте, у нас со временем — нет.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:11.5px;color:var(--ink-faint);margin-top:16px;">Осознанно не раскрываем здесь точную механику скоринга, условия банковского партнёрства и детали правовой логики — обсудим подробно при личном разговоре.</p>
+</div>
+
+<div id="faq" class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Частые вопросы</div>
+    <h2>Отвечаем прямо, а не уклоняемся</h2>
+    <p>Собрали вопросы, которые задали бы сами на месте карьера, перевозчика или заказчика.</p>
+  </div>
+  <div class="faq-list">
+
+    <details class="faq-item">
+      <summary>Моя история сделок не утечёт к конкурентам?</summary>
+      <div class="faq-a">Историю ваших сделок видите только вы и конкретный контрагент по этой сделке — другие карьеры и заказчики её не видят. Публично показывается только агрегированная репутация (рейтинг, доля споров), не детали сделок. Это принципиальное архитектурное решение, не обещание на словах.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Сколько это будет стоить?</summary>
+      <div class="faq-a">Честно: точной ставки пока нет. В демо заложена скользящая комиссия от суммы сделки, но её размер — предмет проверки на реальном рынке, а не готовое решение. Разговор с вами и есть часть того, как мы это определяем — не наоборот.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>А если платформа закроется через полгода?</summary>
+      <div class="faq-a">Мы на стадии проверки идеи — не скрываем это нигде на этой странице. Разговор с нами сейчас ничего не обязывает и не привязывает вас к платформе: это 15 минут, чтобы понять, насколько эта боль реальна для вас, не подписание контракта.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Нужно ли использовать BNPL, страхование и все остальные инструменты сразу?</summary>
+      <div class="faq-a">Нет, ни один из дополнительных инструментов не обязателен. Базовая механика — верификация отгрузки и защищённая сделка. BNPL, страхование, тендер, дилерские контракты — опции, которые включаются по желанию конкретной стороны сделки.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Независимый эксперт — не будет ли он на стороне платформы или карьера?</summary>
+      <div class="faq-a">Эксперт получает фиксированный гонорар за рассмотрение спора вне зависимости от исхода — оплата не привязана к тому, чью сторону он принял. Апелляцию рассматривает <b>другой</b> эксперт, не тот, что выносил первое решение. Это защита от предвзятости на уровне механики, не только декларация.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Чем это отличается от обычного тендера или маркетплейса стройматериалов?</summary>
+      <div class="faq-a">Типовые B2B-каталоги дают витрину и заявки, но не решают саму проблему — что делать, когда привезли не то. ПЛОМБА в первую очередь про верификацию факта поставки и разрешение спора, а каталог и тендер — вокруг этого ядра, не наоборот.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Мне нужно что-то менять в своих процессах прямо сейчас?</summary>
+      <div class="faq-a">Нет. На этом этапе нам важнее услышать вас, чем что-то внедрить. Никакой интеграции, регистрации или обязательств — просто разговор о том, как вы сегодня решаете споры по фракции и весу.</div>
+    </details>
+
+  </div>
+</div>
+
+<div class="section wrap">
+  <div class="section-head">
+    <div class="eyebrow">Дорожная карта</div>
+    <h2>Где мы сейчас</h2>
+  </div>
+  <div class="roadmap">
+    <div class="rm-line"></div>
+    <div class="rm-step">
+      <div class="rm-dot"></div>
+      <span class="rm-tag">Сейчас</span>
+      <h4>Проверка гипотез</h4>
+      <p>Интервью с карьерами, перевозчиками и заказчиками — насколько эта боль реальна и в каком виде.</p>
+    </div>
+    <div class="rm-step future">
+      <div class="rm-dot"></div>
+      <span class="rm-tag">Дальше</span>
+      <h4>Пилот в одном регионе</h4>
+      <p>5-10 карьеров с прозрачной историей + 1-2 крупных заказчика — не размытый федеральный запуск.</p>
+    </div>
+    <div class="rm-step future">
+      <div class="rm-dot"></div>
+      <span class="rm-tag">Потом</span>
+      <h4>Масштабирование</h4>
+      <p>Расширение на новые регионы и категории — только после подтверждённых цифр с пилота.</p>
+    </div>
+  </div>
+</div>
+
+<div id="privacy" class="section wrap">
+  <details class="faq-item" style="max-width:760px;">
+    <summary>Политика обработки персональных данных</summary>
+    <div class="faq-a">
+      <p><b>Что собираем.</b> Имя, телефон или Telegram, регион и текст сообщения — только то, что вы сами вводите в форму заявки.</p>
+      <p><b>Зачем.</b> Единственная цель — связаться с вами по вашей же заявке. Никакой рассылки, никакой передачи третьим лицам, никакой рекламы.</p>
+      <p><b>Кто видит.</b> Только Скляр Фёдор Васильевич (ИП) лично — форма отправляет данные напрямую на личную почту, без промежуточного сервера и без сторонних сервисов аналитики на этой странице.</p>
+      <p><b>Хранение и удаление.</b> Данные хранятся до тех пор, пока не понадобятся для связи с вами, либо до вашего запроса на удаление — напишите на fedor.sklyar@gmail.com или в Telegram @fedorsklyar, и данные удалят.</p>
+      <p style="font-size:11.5px;color:var(--ink-faint);margin-top:14px;">Это добросовестный черновик, а не юридически выверенный документ — проект на стадии проверки идеи. Перед реальным запуском платформы политика будет оформлена юристом и платформа — зарегистрирована оператором персональных данных, как того требует 152-ФЗ.</p>
+    </div>
+  </details>
+</div>
+
+<div class="section wrap">
+  <div class="honest">
+    <b>Честно о том, где мы сейчас.</b> ПЛОМБА — на стадии проверки идеи, не готовый к массовому запуску продукт. У нас есть рабочий прототип и понимание, как должна работать верификация и разрешение споров — но нет ни одной коммерческой сделки. Если вы карьер, перевозчик, заказчик или эксперт по нерудным материалам — нам важнее всего услышать, насколько эта боль реальна именно для вас, а не продать вам готовое решение.
+  </div>
+</div>
+
+<div id="contact" class="section wrap">
+  <div class="form-section">
+    <div class="section-head">
+      <div class="eyebrow" style="color:#E8A87C;">Контакт</div>
+      <h2>Расскажите о своей боли — 15 минут разговора</h2>
+      <p>Заполните форму или напишите напрямую. Мы отвечаем лично, это не автоворонка.</p>
+    </div>
+
+    <div class="role-toggle" id="roleToggle">
+      <button type="button" class="role-btn active" data-role="Карьер">Я карьер</button>
+      <button type="button" class="role-btn" data-role="Перевозчик">Я перевозчик</button>
+      <button type="button" class="role-btn" data-role="Заказчик">Я заказчик</button>
+      <button type="button" class="role-btn" data-role="Другое">Другое</button>
+    </div>
+
+    <div class="form-grid">
+      <div>
+        <label for="fName">Имя</label>
+        <input id="fName" type="text" placeholder="Как к вам обращаться">
+      </div>
+      <div>
+        <label for="fContact">Телефон или Telegram</label>
+        <input id="fContact" type="text" placeholder="+7 ... или @username">
+      </div>
+      <div class="full">
+        <label for="fRegion">Регион</label>
+        <input id="fRegion" type="text" placeholder="Например, Московская область">
+      </div>
+      <div class="full">
+        <label for="fMsg">Коротко о вашей ситуации (необязательно)</label>
+        <textarea id="fMsg" placeholder="Например: часто ли случаются споры по фракции или весу, как решаете сейчас"></textarea>
+      </div>
+    </div>
+
+    <label style="display:flex;align-items:flex-start;gap:10px;margin-top:18px;max-width:640px;cursor:pointer;font-family:var(--body);text-transform:none;letter-spacing:normal;">
+      <input type="checkbox" id="fConsent" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--rust);">
+      <span style="font-size:12.5px;color:#B8C0C8;line-height:1.5;">Согласен(на) на обработку персональных данных согласно <a href="#privacy" style="color:#E8A87C;">политике обработки</a></span>
+    </label>
+
+    <div class="form-submit">
+      <button type="button" class="btn btn-primary" onclick="submitLead()">Отправить заявку →</button>
+    </div>
+    <p class="form-note">Заявка откроет ваш почтовый клиент с предзаполненным письмом на <b style="color:#E8A87C;">fedor.sklyar@gmail.com</b>. Формы без бэкенда пока нет осознанно — на этой стадии важнее личный разговор, чем автоматизация. Быстрее всего — сразу в Telegram: <b style="color:#E8A87C;">@fedorsklyar</b>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-row" style="flex-direction:column;align-items:flex-start;gap:10px;">
+    <div class="foot-row" style="width:100%;">
+      <span>© 2026 ПЛОМБА — исследовательская стадия проекта</span>
+      <span><a href="mailto:fedor.sklyar@gmail.com" style="color:var(--ink-soft);text-decoration:none;">fedor.sklyar@gmail.com</a> · <a href="https://t.me/fedorsklyar" style="color:var(--ink-soft);text-decoration:none;">@fedorsklyar</a></span>
+    </div>
+    <div style="font-size:11.5px;color:var(--ink-faint);">ИП Скляр Фёдор Васильевич. Все права защищены. · <a href="#privacy" style="color:var(--ink-faint);">Обработка персональных данных</a></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('roleTabs').addEventListener('click', (e) => {
+  const tab = e.target.closest('.role-tab');
+  if (!tab) return;
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(tab.dataset.panel).classList.add('active');
+});
+
+let selectedRole = "Карьер";
+document.getElementById('roleToggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('.role-btn');
+  if (!btn) return;
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedRole = btn.dataset.role;
+});
+
+// Заполните после настройки Supabase (см. backend/SUPABASE_SETUP.md).
+// Если оставить как есть — форма всё равно работает через mailto,
+// просто заявки не будут сохраняться в общую базу.
+const SUPABASE_URL = 'ВСТАВЬТЕ_PROJECT_URL';
+const SUPABASE_ANON_KEY = 'ВСТАВЬТЕ_ANON_KEY';
+
+async function saveLead(payload){
+  if(SUPABASE_URL.includes('ВСТАВЬТЕ') || SUPABASE_ANON_KEY.includes('ВСТАВЬТЕ')) return; // бэкенд ещё не подключён — тихо пропускаем
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch(e){
+    console.warn('Не удалось сохранить заявку в базу — форма всё равно откроет письмо', e);
+  }
+}
+
+function submitLead(){
+  if(!document.getElementById('fConsent').checked){
+    alert('Отметьте согласие на обработку персональных данных, чтобы отправить заявку.');
+    return;
+  }
+  const name = document.getElementById('fName').value.trim();
+  const contact = document.getElementById('fContact').value.trim();
+  const region = document.getElementById('fRegion').value.trim();
+  const msg = document.getElementById('fMsg').value.trim();
+
+  saveLead({ role: selectedRole, name, contact, region, message: msg }); // не блокируем отправку письма ожиданием ответа сервера
+
+  const subject = encodeURIComponent(`ПЛОМБА — заявка (${selectedRole})`);
+  const body = encodeURIComponent(
+`Роль: ${selectedRole}
+Имя: ${name || '—'}
+Контакт: ${contact || '—'}
+Регион: ${region || '—'}
+
+Сообщение:
+${msg || '—'}`
+  );
+  window.location.href = `mailto:fedor.sklyar@gmail.com?subject=${subject}&body=${body}`;
+}
+</script>
+
+</body>
+</html>
